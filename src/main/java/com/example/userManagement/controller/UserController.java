@@ -3,6 +3,7 @@ package com.example.userManagement.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,6 +43,11 @@ public class UserController {
 	public ResponseEntity<String> deleteUser(@PathVariable int id){
 		service.deleteUser(id);
 		return new ResponseEntity<String>("Id "+id+" is deleted.",HttpStatus.OK);
+	}
+	@GetMapping("getPage/{pageId}")
+	public ResponseEntity<Page<User>> getUserByPage(@PathVariable int pageId){
+		Page<User> user=service.getUserPageWise(pageId);
+		return new ResponseEntity<Page<User>>(user,HttpStatus.OK);
 	}
 	
 }

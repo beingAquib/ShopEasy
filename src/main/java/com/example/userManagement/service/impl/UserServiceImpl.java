@@ -3,6 +3,9 @@ package com.example.userManagement.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.userManagement.Entity.User;
@@ -52,6 +55,16 @@ public void deleteUser(int id) {
 	
 	  repo.deleteById(id);
 	 
+}
+
+@Override
+public Page<User> getUserPageWise(int pageNumber) {
+	// TODO Auto-generated method stub
+	
+	Pageable paagable = PageRequest.of(pageNumber, 3);
+	Page<User> page=repo.findAll(paagable);
+	return page;
+	
 }
 	
 	

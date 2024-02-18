@@ -2,7 +2,6 @@ package com.example.userManagement.Repository;
 
 
 import java.util.List;
-import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -11,18 +10,24 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.annotation.Rollback;
 
 import com.example.userManagement.Entity.Role;
 import com.example.userManagement.Entity.User;
 
-@DataJpaTest
+
+@DataJpaTest(showSql = false)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Rollback(false)
 class UserRepositoryTest {
 	
 	@Autowired
 	UserRepository ur;
+	
+	
 	
 	@Autowired
 	TestEntityManager em;
@@ -83,6 +88,14 @@ class UserRepositoryTest {
 	
 	
 	
+	}
+	
+	@Test
+	void findUsingPage() {
+		Pageable paagable = PageRequest.of(5, 3);
+		Page<User> page=ur.findAll(paagable);
+		page.forEach(a->System.out.print(a));
+		
 	}
 
 }
